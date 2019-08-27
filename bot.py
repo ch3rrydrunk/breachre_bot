@@ -1,26 +1,35 @@
 #/env/bin/Python3
-import discord, os
+# https://discord.gg/79Zn3n
 
-client = discord.Client()
-TOKEN = os.getenv('TOKEN')
-client.run(TOKEN)
+### Libraries 
+import os
+import discord
+from discord.ext import commands
+import logging
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
+### Logging ON
+logger = logging.getLogger('discord')
+logger.setLevel(logging.DEBUG)
+handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
+handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+logger.addHandler(handler)
 
-    if message.content.startswith('!hello'):
-        msg = 'Hello {0.author.mention}'.format(message)
-        await client.send_message(message.channel, msg)
+# Init discord client and bot
+bot = commands.Bot(command_prefix='!')
 
-@client.event
+@bot.event
 async def on_ready():
-    print('Logged in as')
-    print(client.user.name)
-    print(client.user.id)
-    print('------')
+	client.status = "Protecting security"
+	print('We have logged in as {0.user}'.format(client))
+
+@bot.command(pass_context=True)
+async def hello(ctx):
+    await ctx.send('Hi!')
+
+@bot.command(pass_context=True)
+async def check(ctx, mail):
+    await ctx.send('This is your mail {0}'.format(mail))
 
 if __name__ == "__main__":
     TOKEN = os.getenv('TOKEN')
-    client.run(TOKEN)
+    bot.run(TOKEN)

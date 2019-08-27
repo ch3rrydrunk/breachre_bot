@@ -2,10 +2,8 @@
 # https://discord.gg/79Zn3n
 
 ### Libraries 
-import os
-import discord
+import os, discord, requests, logging
 from discord.ext import commands
-import logging
 
 ### Logging ON
 logger = logging.getLogger('discord')

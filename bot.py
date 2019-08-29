@@ -17,8 +17,8 @@ bot = commands.Bot(command_prefix='!')
 
 @bot.event
 async def on_ready():
-	client.status = "Protecting security"
-	print('We have logged in as {0.user}'.format(client))
+	bot.status = "Protecting security"
+	print('We have logged in as {0.user}'.format(bot))
 
 @bot.command(pass_context=True)
 async def hello(ctx):

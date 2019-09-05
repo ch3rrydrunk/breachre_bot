@@ -22,7 +22,7 @@ async def on_ready():
 # API response : r_keys = ['email', 'records', 'isAssigned', 'breaches']
 @bot.command(pass_context=True)
 async def check(ctx, email):
-    r = requests.get('https://breachreport.com/api/v1/email/{0}/check'.format(email), params={}, headers = headers)
+    r = requests.get(API_address.format(email), params={}, headers = headers)
     if (r.status_code == requests.codes.ok):
         r_dict = r.json()
         if (r_dict['records'] == 0):
@@ -39,6 +39,7 @@ async def check(ctx, email):
 
 # Set tokens from env variables and config requests headers
 if __name__ == "__main__":
+    API_address = "https://breachreport.com/portal/api/v1/email/{0}/check"
     TOKEN = os.getenv('TOKEN')
     B_TOKEN = os.getenv('BREACH_TOKEN')
     headers = {'Authorization': B_TOKEN}

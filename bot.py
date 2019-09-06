@@ -28,11 +28,12 @@ async def check(ctx, email):
         if (r_dict['records'] == 0):
             await ctx.send('🙌You are safe!🙌\nBig ups on keeping your password secure!')
         else:
-            message = 'Whoopsie! Some of your data may have been compromised!\n'\
-                        'Here is a list of resources and types of data leaked\n'
-            for breach_d in r_dict['breaches']:
-                message += '    Resource: {0}.\n'.format(breach_d['title'])
-                message += '    Data type: {0}'.format(breach_d['dataCompromised'])
+            s = ""
+            if (r_dict['records'] > 1):
+                s = "s"
+            message = "Whoopsie! Some of your data may have been compromised!\n"
+            message += "Your data has been leaked {0} time{1}.\n".format(r_dict['records'], s)
+            message += "Find out more at https://breachreport.com/"
             await ctx.send(message)
     else:
         await ctx.send('Service seems to be offline.\nPlease, try again in 5 minutes.')
